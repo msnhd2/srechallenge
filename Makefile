@@ -12,16 +12,20 @@ active-env:
 install-dependencies:
 	pip install --upgrade pip && pip3 install -r ./api/requirements.txt
 
-run_gunicorn:
+run-gunicorn:
 	gunicorn --chdir api main:app -b 0.0.0.0:5000
 
 # Para executar o código em docker execute os seguintes comandos
-build image:
+build-image:
 	docker build -t flask/flask_docker .
 
-run_container:
+run-container:
 	docker run -d -p 5000:5000 flask/flask_docker
 
 # Para executar o lint e validar erros de identação no código execute o comando abaixo
 lint:
 	autopep8 --in-place -a -a ./api/**/*.py
+
+# Para executar testes unitários
+unit-test:
+	pytest ./api/tests/
