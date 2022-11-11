@@ -1,0 +1,8 @@
+**/__pycache__/
+*.db
+*.hcl
+*.terraform*
+*.tfstate*
+kubeconfig
+kubectl
+**/env/
