@@ -19,9 +19,12 @@ resource "aws_subnet" "this" {
 # Para não criar vários resources para cada subnet utilizei o parâmetro for_each que esta disponivel
 # a partir do terraform 12, e ele irá criar uma subnet para cada objeto da lista ou map
   for_each = { for subnet in var.vpc_configuration.subnets: subnet.name => subnet}
-  availability_zone_id = local.az_pairs[each.key]
+# Colocar o id da availability zone hard coded não é uma boa prática pois pode ser alterado com o passar do tempo.
+# Criei um data para buscar as availability zones disponiveis na região que utilizamos na aws.
+  availability_zone_id = local.az_pairs[each.key] #each.key bscar o subnet.name
   vpc_id = aws_vpc.this.id
-  cidr_block = each.value.cidr_block
+  cidr_block = each.value.cidr_block #each.value pega algum valor de dentro do bloco criado em variables
+  map_public_ip_on_launch = each.value.public
 
   tags = {
     Name = each.key
@@ -38,6 +41,7 @@ resource "aws_nat_gateway" "this" {
   for_each = toset(local.private_subnets)
 
   allocation_id = aws_eip.nat_gateway[each.value].id
+# Garanti que o Nat gateway esteja na avaiability zone e subnet publica correta para a respectiva subnet privada utilizar
   subnet_id = aws_subnet.this[local.subnet_pairs[each.value]].id
 }
 
@@ -53,8 +57,8 @@ resource "aws_route" "internet_gateway" {
 }
 
 resource "aws_route_table_association" "public" {
-  # Foi utilizada a função toset com o objetivo de remover itens duplicados na lista passada como parametro, e descartar a ordenação.
-  # Documentação toset(https://www.terraform.io/language/functions/toset)
+# Foi utilizada a função toset com o objetivo de remover itens duplicados na lista passada como parametro, e descartar a ordenação.
+# Documentação toset(https://www.terraform.io/language/functions/toset)
   for_each = toset(local.public_subnets) 
   subnet_id = aws_subnet.this[each.value].id
   route_table_id = aws_route_table.public.id
