@@ -9,10 +9,17 @@ resource "aws_vpc" "this" { # Convenção de nome this quando só tem tem um res
   cidr_block = var.vpc_configuration.cidr_block
   enable_dns_hostnames = true
   enable_dns_support = true
+
+  tags = {
+      Name = format("vpc-%s", var.cluster_name)
   }
+}
 
 resource "aws_internet_gateway" "this" {
   vpc_id = aws_vpc.this.id
+  tags = {
+    Name = format("internet-gateway-%s", var.cluster_name)
+  }
 }
 
 resource "aws_subnet" "this" {
@@ -21,13 +28,13 @@ resource "aws_subnet" "this" {
   for_each = { for subnet in var.vpc_configuration.subnets: subnet.name => subnet}
 # Colocar o id da availability zone hard coded não é uma boa prática pois pode ser alterado com o passar do tempo.
 # Criei um data para buscar as availability zones disponiveis na região que utilizamos na aws.
-  availability_zone_id = local.az_pairs[each.key] #each.key bscar o subnet.name
+  availability_zone_id = local.az_pairs[each.key] #each.key buscar o subnet.name
   vpc_id = aws_vpc.this.id
   cidr_block = each.value.cidr_block #each.value pega algum valor de dentro do bloco criado em variables
   map_public_ip_on_launch = each.value.public
 
   tags = {
-    Name = each.key
+    Name = format("%s-%s", var.cluster_name, each.key)
   }
 }
 

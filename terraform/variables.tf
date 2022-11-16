@@ -1,4 +1,4 @@
-variable "cluster" {
+variable "cluster_name" {
     default = "k8s-srechallenge"
 }
 
@@ -25,4 +25,8 @@ variable "service_name" {
 variable "service_domain" {
   type        = string
   description = ""
+}
+
+variable "k8s_version" {
+  default     = "1.15"
 }
