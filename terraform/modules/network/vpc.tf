@@ -32,9 +32,8 @@ resource "aws_subnet" "this" {
   vpc_id = aws_vpc.this.id
   cidr_block = each.value.cidr_block #each.value pega algum valor de dentro do bloco criado em variables
   map_public_ip_on_launch = each.value.public
-
   tags = {
-    Name = format("%s-%s", var.cluster_name, each.key)
+   Name = format("%s-%s", var.cluster_name, each.key)
   }
 }
 
@@ -88,4 +87,29 @@ resource "aws_route_table_association" "private" {
   for_each = toset(local.private_subnets)
   subnet_id = aws_subnet.this[each.value].id
   route_table_id = aws_route_table.private[each.value].id
+}
+
+resource "aws_security_group" "cluster_master_sg" {
+    name = format("%s-master-sg", var.cluster_name)
+    vpc_id = aws_vpc.this.id
+
+    egress {
+        from_port   = 0
+        to_port     = 0
+        protocol    = "-1"
+        cidr_blocks = [ "0.0.0.0/0" ]
+    }
+
+    tags = {
+        Name = format("%s-master-sg", var.cluster_name)
+    }
+}
+
+resource "aws_security_group_rule" "cluster_ingress_https" {
+    cidr_blocks = ["0.0.0.0/0"]
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    security_group_id = aws_security_group.cluster_master_sg.id
+    type = "ingress"
 }

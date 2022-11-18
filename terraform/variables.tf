@@ -28,5 +28,5 @@ variable "service_domain" {
 }
 
 variable "k8s_version" {
-  default     = "1.15"
+  type        = string
 }

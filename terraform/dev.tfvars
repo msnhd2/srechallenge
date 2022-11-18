@@ -1,5 +1,7 @@
 service_name   = "SreChallenge"
 service_domain = "api-srechallenge"
+k8s_version    = "1.24"
+
 vpc_configuration = {
   cidr_block = "10.0.0.0/16"
   subnets = [
