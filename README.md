@@ -39,7 +39,7 @@ URLs de acesso:
 - python >= 3.8.5
 - docker >= 20.10.7
 - terraform >= 0.15.00
-- azurerm >= 2.64.0
+- kind >= 0.17.0
 - gunicorn >= 20.1.0
 
 ## Como rodar o projeto com Docker

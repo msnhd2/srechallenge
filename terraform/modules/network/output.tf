@@ -2,8 +2,12 @@ output "cluster_vpc" {
     value = aws_vpc.this
 }
 
-output "subnets" {
-    value = aws_subnet.this
+output "subnets_a" {
+    value = aws_subnet.this["private-a"]
+}
+
+output "subnets_b" {
+    value = aws_subnet.this["private-b"]
 }
 
 output "cluster_vpc_id" {
