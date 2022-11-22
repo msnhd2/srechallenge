@@ -37,4 +37,6 @@ module "nodes" {
     aws_security_group = module.vpc.aws_security_group
     node_instance_size = var.node_instance_size
     auto_scale_options = var.auto_scale_options
+
+    depends_on = [module.eks, module.iam]
 }

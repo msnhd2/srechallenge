@@ -15,16 +15,20 @@ Foi utilizado o terraform como IaC para provisionamento do ambiente na AWS.
 ## Conteúdos
    * [Funcionalidades](#funcionalidades)
    * [Dependências](#dependências)
-   * [Como rodar o projeto](#como-rodar-o-projeto)
+   * [Como rodar o projeto com Docker](#como-rodar-o-projeto-com-docker)
+   * [Como rodar o projeto com Kubernetes local](#como-rodar-o-projeto-com-kubernetes-local)
+   * [Provisionar serviços com terraform](#provisionar-serviços-com-terraform)
+   * [EKS](#eks)
+   * [Como fazer um teste de carga](#como-fazer-um-teste-de-carga)
    * [Deploy](#deploy)
 
 ## Funcionalidades
 
-:trophy: Cadastro de usuários
-:trophy: Consulta de usuários através do CPF
-:trophy: Consulta de todos os usuários
-:trophy: Alteração de usuários cadastrados através do cpf
-:trophy: Deleção de usuários através do CPF
+<br>:trophy: Cadastro de usuários</br>
+<br>:trophy: Consulta de usuários através do CPF</br>
+<br>:trophy: Consulta de todos os usuários</br>
+<br>:trophy: Alteração de usuários cadastrados através do CPF</br>
+<br>:trophy: Deleção de usuários através do CPF</br>
 
 ## Dependências
 
@@ -54,49 +58,49 @@ make run-container
 
 ## Como rodar o projeto com Kubernetes local
 
-> Criar cluster
+### ***Criar cluster***
 
 ```sh
 kind create cluster --name sre-challenge
 ```
 
-> Build Image
+### ***Build Image***
 
 ```sh
 make build-image
 ```
 
-> Apply deployment application
+### ***Apply deployment application***
 
 ```sh
 make deploy_api_k8s
 ```
 
-> Apply deployment grafana
+### ***Apply deployment grafana***
 
 ```sh
 make deploy_grafana
 ```
 
-> Apply deployment prometheus
+### ***Apply deployment prometheus****
 
 ```sh
 make deploy_prometheus
 ```
 
-> Apply deployment SonarQube
+### ***Apply deployment SonarQube***
 
 ```sh
 make deploy_sonarqube
 ```
 
-> Apply deployment ArgoCD
+### ***Apply deployment ArgoCD***
 
 ```sh
 make deploy_argocd
 ```
 
-> Apply deployment FortIO
+### ***Apply deployment FortIO***
 
 ```sh
 make deploy_fortio
@@ -144,7 +148,7 @@ Quando desejar que o codigo novo chegue a produção deve-se executar a pipeline
  - Checar o status do job de CI
  - Deploy da imagem com a tag latest no registry através do ArgoCD
 
- ## EKS
+## EKS
 
  - #### Estratégia de resiliencia
    <br>:trophy: Auto Scale Nodes</br>
