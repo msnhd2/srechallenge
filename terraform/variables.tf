@@ -17,16 +17,6 @@ variable "vpc_configuration" {
   })
 }
 
-variable "service_name" {
-  type        = string
-  description = ""
-}
-
-variable "service_domain" {
-  type        = string
-  description = ""
-}
-
 variable "k8s_version" {
   type        = string
 }

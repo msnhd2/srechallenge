@@ -2,17 +2,13 @@
 
 ## Descrição do Projeto
 
-Este projeto consiste em uma API que torna possível cadastrar, consulta de usuários.
+Este projeto consiste em uma API que torna possível gerenciamento de cadastro de usuários.
 
 As pipelines de integração continua e continua são feitas no Jenkins.
 
 A API fica hospedada em um eks.
 
 Foi utilizado o terraform como IaC para provisionamento do ambiente na AWS.
-
-URLs de acesso:
-
-- EKS - URL
 
 [Documentação da API](https://docs.google.com/document/d/11iMVa0PZWp-1hjGak5RW7J1ey3WyasWJ/edit#)
 
@@ -56,11 +52,47 @@ make build-image
 make run-container
 ```
 
-### Provisionar serviços com terraform
+## Como rodar o projeto com Kubernetes local
 
- Neste projeto foi utilizado o terraform para provisionar o cluster kubernetes.
- 
- :arrow_forward: EKS
+:arrow_forward: Criar cluster
+
+```sh
+kind create cluster --name sre-challenge
+```
+
+:arrow_forward: Build Image
+
+```sh
+make build-image
+```
+
+:arrow_forward: Apply deployment
+
+```sh
+make deploy_api_k8s
+```
+
+## Provisionar serviços com terraform
+
+ Neste projeto foi utilizado o terraform para provisionar o cluster kubernetes e todas as suas dependencias(VPC, IAM, worker nodes).
+
+:arrow_forward: Inicialização de modulos terraform
+
+```sh
+terraform init
+```
+
+:arrow_forward: Planning terraform
+
+```sh
+terraform plan -var-file dev.tfvars
+```
+
+:arrow_forward: Apply terraform
+
+```sh
+terraform apply -var-file dev.tfvars
+```
 
 ## Deploy
 
@@ -68,12 +100,23 @@ Caminho a produção: trunk base development
  Temos apenas 1 branch fixa no projeto: Main.
  O restante das branchs são feature branchs
 
- ### EKS
+ :arrow_forward: Fluxo: feature_branch -> Main
 
  Quando for efetuado o merge do PR o CI do Jenkins irá:
  - Efetuar o build da imagem docker
- - Realizar o upload da nova imagem docker para o registry
  - Executar testes unitários
+ - Rodar scan do SonarQube
+ - Validar status do QualityGate
+ - Realizar o upload da nova imagem docker para o registry
+
+ ## EKS
+ - Monitoramento
+
+ <br>:trophy: Grafana</br>
+ <br>:trophy: Promotheus</br>
+
+ - Teste de carga
+ <br>FortIO</br>
 
  ## Desenvolvedor
 
