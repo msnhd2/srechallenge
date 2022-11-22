@@ -1,0 +1,11 @@
+variable "aws_region" {}
+variable "cluster_name" {}
+variable "k8s_version" {}
+variable "cluster_vpc" {}
+variable "private_subnets_a" {}
+variable "private_subnets_b" {}
+variable "eks_cluster" {}
+variable "aws_security_group" {}
+variable "node_instance_size" {}
+variable "auto_scale_options" {}
+variable "eks_nodes_roles_arn" {}

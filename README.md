@@ -54,22 +54,52 @@ make run-container
 
 ## Como rodar o projeto com Kubernetes local
 
-:arrow_forward: Criar cluster
+> Criar cluster
 
 ```sh
 kind create cluster --name sre-challenge
 ```
 
-:arrow_forward: Build Image
+> Build Image
 
 ```sh
 make build-image
 ```
 
-:arrow_forward: Apply deployment
+> Apply deployment application
 
 ```sh
 make deploy_api_k8s
+```
+
+> Apply deployment grafana
+
+```sh
+make deploy_grafana
+```
+
+> Apply deployment prometheus
+
+```sh
+make deploy_prometheus
+```
+
+> Apply deployment SonarQube
+
+```sh
+make deploy_sonarqube
+```
+
+> Apply deployment ArgoCD
+
+```sh
+make deploy_argocd
+```
+
+> Apply deployment FortIO
+
+```sh
+make deploy_fortio
 ```
 
 ## Provisionar serviços com terraform
@@ -108,15 +138,26 @@ Caminho a produção: trunk base development
  - Rodar scan do SonarQube
  - Validar status do QualityGate
  - Realizar o upload da nova imagem docker para o registry
+ - Gerar Tag
+
+Quando desejar que o codigo novo chegue a produção deve-se executar a pipeline de CD que irá:
+ - Checar o status do job de CI
+ - Deploy da imagem com a tag latest no registry através do ArgoCD
 
  ## EKS
- - Monitoramento
 
- <br>:trophy: Grafana</br>
- <br>:trophy: Promotheus</br>
+ - #### Estratégia de resiliencia
+   <br>:trophy: Auto Scale Nodes</br>
+   <br>:trophy: Auto Scale Pods</br>
 
- - Teste de carga
- <br>FortIO</br>
+ - #### Monitoramento
+   <br>:trophy: Grafana</br>
+   <br>:trophy: Promotheus</br>
+
+ - #### Teste de carga
+ <br>:trophy: FortIO</br>
+
+## Como fazer um teste de carga
 
  ## Desenvolvedor
 

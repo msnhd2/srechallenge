@@ -34,7 +34,8 @@ resource "aws_subnet" "this" {
   map_public_ip_on_launch = each.value.public
   
   tags = {
-   Name = format("%s-%s", var.cluster_name, each.key)
+   Name = format("%s-%s", var.cluster_name, each.key),
+   "kubernetes.io/cluster/${var.cluster_name}" = "shared"
   }
 }
 

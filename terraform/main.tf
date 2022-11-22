@@ -23,3 +23,18 @@ module "eks" {
 
     depends_on = [module.vpc, module.iam]
 }
+
+module "nodes" {
+    source = "./modules/nodes"
+    cluster_name       = var.cluster_name
+    aws_region         = var.aws_region
+    k8s_version        = var.k8s_version
+    cluster_vpc        = module.vpc.cluster_vpc
+    private_subnets_a  = module.vpc.subnets_a
+    private_subnets_b  = module.vpc.subnets_b
+    eks_cluster        = module.eks.eks_cluster
+    eks_nodes_roles_arn = module.iam.eks_nodes_roles_arn
+    aws_security_group = module.vpc.aws_security_group
+    node_instance_size = var.node_instance_size
+    auto_scale_options = var.auto_scale_options
+}

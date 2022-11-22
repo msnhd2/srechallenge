@@ -20,3 +20,17 @@ variable "vpc_configuration" {
 variable "k8s_version" {
   type        = string
 }
+
+variable "node_instance_size" {
+  default = [
+    "t2.micro"
+  ]
+}
+
+variable "auto_scale_options" {
+  default = {
+    min     = 2
+    max     = 4
+    desired = 2
+  }
+}
