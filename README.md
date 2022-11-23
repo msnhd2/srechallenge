@@ -151,12 +151,15 @@ Quando desejar que o codigo novo chegue a produção deve-se executar a pipeline
 ## EKS
 
  - #### Estratégia de resiliencia
-   <br>:trophy: Auto Scale Nodes</br>
-   <br>:trophy: Auto Scale Pods</br>
+   <br>:trophy: Auto Scale Cluster</br>
+   <br>:trophy: Auto Scale Pods(HPA)</br>
 
  - #### Monitoramento
    <br>:trophy: Grafana</br>
    <br>:trophy: Promotheus</br>
+
+ - #### IngressController
+   <br>Traefik</br>
 
  - #### Teste de carga
  <br>:trophy: FortIO</br>

@@ -28,4 +28,4 @@ lint:
 
 # Para executar testes unitários
 unit-test:
-	pytest ./api/tests/
+	python3 -m pytest

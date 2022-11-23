@@ -1,7 +1,7 @@
 aniso8601==6.0.0
 astroid==2.5.6
 autopep8==2.0.0
-Click==7.0
+Click==8.0.0
 disposable-email-domains==0.0.65
 Flask==1.0.2
 Flask-RESTful==0.3.7
