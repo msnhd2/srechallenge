@@ -42,68 +42,28 @@ Foi utilizado o terraform como IaC para provisionamento do ambiente na AWS.
 - kind >= 0.17.0
 - gunicorn >= 20.1.0
 
+## Como rodar o projeto a API localmente
+
+:arrow_forward: Create virtualenv + Install dependencies + running 
+
+```sh
+make run-api-local
+```
+
 ## Como rodar o projeto com Docker
 
 :arrow_forward: Build Image
 
 ```sh
-make build-image
-```
-
-:arrow_forward: Subir container com a imagem
-
-```sh
-make run-container
+make run-api-docker-local
 ```
 
 ## Como rodar o projeto com Kubernetes local
 
-### ***Criar cluster***
+:arrow_forward: Create cluster, namespaces + Deploy ArgoCD![alt text](https://www.google.com/url?sa=i&url=https%3A%2F%2Fcncf-branding.netlify.app%2Fprojects%2Fargo%2F&psig=AOvVaw0NXzUYXHlPMoLnzvsSqvaX&ust=1669901617096000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCOia-7eC1vsCFQAAAAAdAAAAABAD), Grafana![alt text](https://www.google.com/url?sa=i&url=https%3A%2F%2Fdocs.mogenius.com%2Fservices%2Fmonitoring%2Fgrafana&psig=AOvVaw2U2w0d1ZPX3ecUJmoV1sou&ust=1669901646992000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCMjMs8aC1vsCFQAAAAAdAAAAABAD), Prometheus![alt text](https://www.google.com/url?sa=i&url=http%3A%2F%2Fwww.stickpng.com%2Fimg%2Ficons-logos-emojis%2Ftech-companies%2Fprometheus-logo&psig=AOvVaw0jJGexh2B05hsjHxmgFIxy&ust=1669901669932000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCKCH5dGC1vsCFQAAAAAdAAAAABAD), SonarQube![alt text](https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.sonarqube.org%2Flogos%2F&psig=AOvVaw18TPKs_zZ1CbuLdxgSouoV&ust=1669901713992000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCIjP4eeC1vsCFQAAAAAdAAAAABAb) API, FortIO
 
 ```sh
-kind create cluster --name sre-challenge
-```
-
-### ***Build Image***
-
-```sh
-make build-image
-```
-
-### ***Apply deployment application***
-
-```sh
-make deploy_api_k8s
-```
-
-### ***Apply deployment grafana***
-
-```sh
-make deploy_grafana
-```
-
-### ***Apply deployment prometheus****
-
-```sh
-make deploy_prometheus
-```
-
-### ***Apply deployment SonarQube***
-
-```sh
-make deploy_sonarqube
-```
-
-### ***Apply deployment ArgoCD***
-
-```sh
-make deploy_argocd
-```
-
-### ***Apply deployment FortIO***
-
-```sh
-make deploy_fortio
+make run-full-deployments-k8s
 ```
 
 ## Provisionar serviços com terraform

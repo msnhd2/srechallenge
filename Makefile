@@ -1,3 +1,9 @@
+# Comandos sumarizados
+run-api-local: install-pipenv config-pipenv active-env install-dependencies run-gunicorn
+run-api-docker-local: build-image run-container
+run-full-deployments-k8s: kind-create-cluster create_namespaces deploy_argocd deploy_grafana \
+						  deploy_prometheus deploy_sonarqube deploy_api deploy_fortio
+
 # Para rodar o código localmente execute os seguintes comandos
 
 install-pipenv:
@@ -7,7 +13,7 @@ config-pipenv:
 	python3 -m virtualenv env --python python3
 
 active-env:
-	source env/bin/activate
+	. ./env/bin/activate
 
 install-dependencies:
 	pip install --upgrade pip && pip3 install -r ./api/requirements.txt
@@ -29,3 +35,28 @@ lint:
 # Para executar testes unitários
 unit-test:
 	python3 -m pytest
+
+# Criar cluster localmente
+kind-create-cluster:
+	kind-create-cluster --name srechallenge --config cluster.yaml
+
+# Criar namespace
+create_namespaces:
+
+# Deploy argoCD
+deploy_argocd:
+
+# Deploy grafana
+deploy_grafana:
+
+# Deploy prometheus
+deploy_prometheus:
+
+# Deploy SonarQube
+deploy_sonarqube:
+
+# Deploy application
+deploy_api:
+
+# Deploy FortIO
+deploy_fortio:
