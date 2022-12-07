@@ -1,4 +1,5 @@
 FROM python:3.8-alpine
+
 # Impede o python de gravar arquivos pyc no disco
 ENV PYTHONDONTWRITEBYTECODE 1
 # Impede o python de armazenar em buffer stdout e stderr

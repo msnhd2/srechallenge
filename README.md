@@ -52,7 +52,7 @@ make run-api-local
 
 ## Como rodar o projeto com Docker
 
-:arrow_forward: Build Image
+:arrow_forward: Build Image + Running
 
 ```sh
 make run-api-docker-local
@@ -96,7 +96,7 @@ Caminho a produção: trunk base development
 
  :arrow_forward: Fluxo: feature_branch -> Main
 
- Quando for efetuado o merge do PR o CI do Jenkins irá:
+ Quando o PR for criado o CI do GithubActions irá:
  - Efetuar o build da imagem docker
  - Executar testes unitários
  - Rodar scan do SonarQube
@@ -104,8 +104,7 @@ Caminho a produção: trunk base development
  - Realizar o upload da nova imagem docker para o registry
  - Gerar Tag
 
-Quando desejar que o codigo novo chegue a produção deve-se executar a pipeline de CD que irá:
- - Checar o status do job de CI
+Quando desejar que o codigo novo chegue a produção deve-se efetuar o merge do PR e a pipeline de CD irá:
  - Deploy da imagem com a tag latest no registry através do ArgoCD
 
 ## EKS
@@ -119,12 +118,26 @@ Quando desejar que o codigo novo chegue a produção deve-se executar a pipeline
    <br>:trophy: Promotheus</br>
 
  - #### IngressController
-   <br>Traefik</br>
+   <br>:trophy:Nginx</br>
 
  - #### Teste de carga
- <br>:trophy: FortIO</br>
+   <br>:trophy: FortIO</br>
+
+ - #### Kubernetes Dashboard
+   <br>:trophy: Dashboard</br>
 
 ## Como fazer um teste de carga
+
+
+## Como acessar as ferramentas?
+
+#### Grafana
+
+#### Prometheus Server
+
+#### Dashboard do kubernetes
+
+Após executar o projeto no kubernetes local, acessar o [link](http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/)
 
  ## Desenvolvedor
 

@@ -1,8 +1,8 @@
 # Comandos sumarizados
 run-api-local: install-pipenv config-pipenv active-env install-dependencies run-gunicorn
 run-api-docker-local: build-image run-container
-run-full-deployments-k8s: kind-create-cluster create_namespaces deploy_argocd deploy_grafana \
-						  deploy_prometheus deploy_sonarqube deploy_api deploy_fortio
+run-full-deployments-k8s: kind-create-cluster create-ingress-controller create_namespace deploy_api deploy_argocd \
+						  deploy_grafana deploy_prometheus deploy_sonarqube deploy_fortio create-kub-dashboard
 
 # Para rodar o código localmente execute os seguintes comandos
 
@@ -38,10 +38,25 @@ unit-test:
 
 # Criar cluster localmente
 kind-create-cluster:
-	kind-create-cluster --name srechallenge --config cluster.yaml
+	kind create cluster --config ./kubernetes/cluster.yaml
+
+# Criar Web UI Dashboard do kubernetes
+# Habilitar acesso ao dashboard
+# Criação da service account e dar o bind
+# Get token para autenticar
+create-kub-dashboard:
+	kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.6.1/aio/deploy/recommended.yaml && \
+	kubectl proxy && \
+	kubectl apply -f ./kubernetes/kub-dash/dashboard_user.yaml -n kubernetes-dashboard && \
+	kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | awk '/^secret-admin-user/{print $1}') | awk '$1=="token:"{print $2}'
+
+# Criar ingress controller nginx
+create-ingress-controller:
+	kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy
 
 # Criar namespace
-create_namespaces:
+create_namespace:
+	kubectl apply -f ./kubernetes/namespaces.yaml
 
 # Deploy argoCD
 deploy_argocd:
