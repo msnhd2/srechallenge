@@ -1,6 +1,12 @@
 service_name   = "SreChallenge"
 service_domain = "api-srechallenge"
 k8s_version    = "1.24"
+node_instance_size = "t2.micro"
+auto_scale_option = {
+  min     = 1
+  max     = 3
+  desired = 2
+}
 
 vpc_configuration = {
   cidr_block = "10.0.0.0/16"

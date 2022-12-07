@@ -41,6 +41,8 @@ Foi utilizado o terraform como IaC para provisionamento do ambiente na AWS.
 - terraform >= 0.15.00
 - kind >= 0.17.0
 - gunicorn >= 20.1.0
+- kubernetes EKS >= 1.24
+- kubernetes Local >= 1.25.3
 
 ## Como rodar o projeto a API localmente
 

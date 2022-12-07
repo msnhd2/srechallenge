@@ -4,13 +4,14 @@ import os
 from dotenv import load_dotenv
 from flask import Flask
 from flask_restful import Api
-from resources.user import Users, User
+from resources.user import Users, User, Healthcheck
 from sql_alchemy import database
 
 # Load variables
 load_dotenv(override=True)
 SQLALCHEMY_DATABASE_URI = os.getenv("SQLALCHEMY_DATABASE_URI")
 SQL_TRACK_MODIFICATIONS = os.getenv("SQL_TRACK_MODIFICATIONS")
+DATABASE_NAME = os.getenv("DATABASE_NAME")
 HOST = os.getenv("HOST")
 PORT = os.getenv("PORT")
 
@@ -30,6 +31,7 @@ def create_app():
 
 api.add_resource(Users, "/users")
 api.add_resource(User, "/users/<string:cpf>")
+api.add_resource(Healthcheck,"/health")
 
 if __name__ == "__main__":
     app.run(host=HOST, port=PORT, debug=False)
