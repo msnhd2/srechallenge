@@ -1,6 +1,8 @@
-import re
 from sql_alchemy import database
 from validate_email import validate_email
+import sqlite3
+import main
+import re
 
 
 class UserModel(database.Model):
@@ -62,6 +64,19 @@ class UserModel(database.Model):
         """Validate if the email format is valid."""
         _valid = validate_email(email)
         return _valid
+
+    def sqlite_available():
+        dbEngine = sqlite3.connect(main.DATABASE_NAME)
+        try:
+           cursor = dbEngine.cursor()
+           cursor.execute("SELECT * FROM users")
+           cursor.close()
+           return True
+        except sqlite3.Error as error:
+           print("Failed to read data from sqlite table", error)
+           dbEngine.close()
+           print("The SQLite connection is closed")
+           return False
 
     def is_cpf_valid(cpf):
         """If cpf in the Brazilian format is valid, it returns True, otherwise, it returns False."""

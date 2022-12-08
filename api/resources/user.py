@@ -1,23 +1,19 @@
+from healthcheck import HealthCheck
 from flask_restful import Resource, reqparse
 from models.user import UserModel
 import main
-import sqlite3
 
 
 class Healthcheck(Resource):
     def get(self):
         """Healthcheck sqlite"""
-        
-        dbEngine = sqlite3.connect(main.DATABASE_NAME)
+        health = HealthCheck(main.create_app(), "/healthcheck")
+        check = UserModel.sqlite_available()
+
         try:
-            cursor = dbEngine.cursor()
-            cursor.execute("SELECT * FROM users")
-            cursor.close()
-            return {"Status": "ok"}, 200
-        except sqlite3.Error as error:
-            print("Failed to read data from sqlite table", error)
-            dbEngine.close()
-            print("The SQLite connection is closed")
+            health.add_check(check)
+            return  {"Status": "ok"}, 200
+        except:
             return {"Status": "not ok"}, 500
 
 class Users(Resource):

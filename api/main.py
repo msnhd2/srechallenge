@@ -29,9 +29,10 @@ def create_database():
 def create_app():
     return app
 
+#Rotas da aplicação
 api.add_resource(Users, "/users")
 api.add_resource(User, "/users/<string:cpf>")
-api.add_resource(Healthcheck,"/health")
+api.add_resource(Healthcheck,"/healthcheck")
 
 if __name__ == "__main__":
     app.run(host=HOST, port=PORT, debug=False)
