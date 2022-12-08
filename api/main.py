@@ -32,7 +32,7 @@ def create_app():
 #Rotas da aplicação
 api.add_resource(Users, "/users")
 api.add_resource(User, "/users/<string:cpf>")
-api.add_resource(Healthcheck,"/healthcheck")
+api.add_resource(Healthcheck,"/healthz")
 
 if __name__ == "__main__":
     app.run(host=HOST, port=PORT, debug=False)

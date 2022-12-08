@@ -23,10 +23,10 @@ run-gunicorn:
 
 # Para executar o código em docker execute os seguintes comandos
 build-image:
-	docker build -t flask/flask_docker .
+	docker build -t msnhd2/flask_docker .
 
 run-container:
-	docker run -d -p 5000:5000 flask/flask_docker
+	docker run -d -p 5000:5000 msnhd2/flask_docker
 
 # Para executar o lint e validar erros de identação no código execute o comando abaixo
 lint:
@@ -50,12 +50,16 @@ create-kub-dashboard:
 	kubectl apply -f ./kubernetes/kub-dash/dashboard_user.yaml -n kubernetes-dashboard && \
 	kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | awk '/^secret-admin-user/{print $1}') | awk '$1=="token:"{print $2}'
 
+# Criar metrics-server
+create-metrics-server:
+
+
 # Criar ingress controller nginx
 create-ingress-controller:
 	kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy
 
 # Criar namespace
-create_namespace:
+create-namespace:
 	kubectl apply -f ./kubernetes/namespaces.yaml
 
 # Deploy argoCD
@@ -72,6 +76,10 @@ deploy_sonarqube:
 
 # Deploy application
 deploy_api:
+	kubectl apply -f ./kubernetes/app/kustomize.yaml
+	kubectl port-forward -n srechallenge service/srechallenge 5000:5000
 
 # Deploy FortIO
+# Criar um Usuário com um comando curl
+# Executar fortio consultando o usuário criado
 deploy_fortio:

@@ -17,8 +17,8 @@ spec:
   limits:
   - default:
       memory: 256Mi
-      cpu: 200m
+      cpu: 2000m
     defaultRequest:
       memory: 128Mi
-      cpu: 100m
+      cpu: 1000m
     type: Container

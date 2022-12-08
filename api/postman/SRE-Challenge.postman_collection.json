@@ -41,6 +41,33 @@
 				"method": "GET",
 				"header": [],
 				"url": {
+					"raw": "http://localhost:5000/users/12764599714",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"users",
+						"12764599714"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All users",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
 					"raw": "http://localhost:5000/users",
 					"protocol": "http",
 					"host": [
@@ -55,19 +82,26 @@
 			"response": []
 		},
 		{
-			"name": "Get All users",
+			"name": "Healthcheck",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"method": "GET",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
-					"raw": "http://localhost:5000/users",
+					"raw": "http://localhost:5000/healthcheck",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "5000",
 					"path": [
-						"users"
+						"healthcheck"
 					]
 				}
 			},
@@ -108,7 +142,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5000/users/12764599714",
+					"raw": "http://localhost:5000/users/29481625052",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -116,7 +150,7 @@
 					"port": "5000",
 					"path": [
 						"users",
-						"12764599714"
+						"29481625052"
 					]
 				}
 			},
