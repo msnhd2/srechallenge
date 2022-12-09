@@ -1,8 +1,8 @@
 # Comandos sumarizados
 run-api-local: install-pipenv config-pipenv active-env install-dependencies run-gunicorn
 run-api-docker-local: build-image run-container
-run-full-deployments-k8s: kind-create-cluster create-ingress-controller create_namespace deploy_api deploy_argocd \
-						  deploy_grafana deploy_prometheus deploy_sonarqube deploy_fortio create-kub-dashboard
+run-full-deployments-k8s: kind-create-cluster create-ingress-controller create-namespaces deploy-api deploy-argocd \
+						  deploy-grafana deploy-prometheus deploy-sonarqube create-kub-dashboard
 
 # Para rodar o código localmente execute os seguintes comandos
 
@@ -59,27 +59,34 @@ create-ingress-controller:
 	kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy
 
 # Criar namespace
-create-namespace:
+create-namespaces:
 	kubectl apply -f ./kubernetes/namespaces.yaml
 
+# Criar metrics-server
+create-metrics-server:
+	kubectl apply -f ./kubernetes/metrics-server.yaml
+
 # Deploy argoCD
-deploy_argocd:
+deploy-argocd:
 
 # Deploy grafana
-deploy_grafana:
+deploy-grafana:
 
 # Deploy prometheus
-deploy_prometheus:
+deploy-prometheus:
 
 # Deploy SonarQube
-deploy_sonarqube:
+deploy-sonarqube:
 
 # Deploy application
-deploy_api:
+deploy-api:
 	kubectl apply -f ./kubernetes/app/kustomize.yaml
-	kubectl port-forward -n srechallenge service/srechallenge 5000:5000
 
-# Deploy FortIO
-# Criar um Usuário com um comando curl
-# Executar fortio consultando o usuário criado
-deploy_fortio:
+# Port Forwarding to all services
+# Utilizei o & para que os comandos sejam executados em segundo plano
+port-Forwarding:
+	kubectl port-forward -n srechallenge service/srechallenge 5000:5000 & \
+
+# Executar fortio 
+running_fortio:
+	kubectl run -it fortio -n srechallenge --rm --image=fortio/fortio -- load -qps 800 -t 120s -c 70 "http://srechallenge-api-svc:5000/healthz"

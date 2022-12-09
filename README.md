@@ -68,6 +68,13 @@ make run-api-docker-local
 make run-full-deployments-k8s
 ```
 
+## Como testar funcionalidades aplicação manualmente
+
+:arrow_forward: Postman
+
+Importe a configuração do postman localizada em [postman](https://github.com/msnhd2/srechallenge/blob/main/api/postman/SRE-Challenge.postman_collection.json) e utilize a documentação para utilizar a API.
+
+
 ## Provisionar serviços com terraform
 
  Neste projeto foi utilizado o terraform para provisionar o cluster kubernetes e todas as suas dependencias(VPC, IAM, worker nodes).

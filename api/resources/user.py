@@ -7,7 +7,7 @@ import main
 class Healthcheck(Resource):
     def get(self):
         """Healthcheck sqlite"""
-        health = HealthCheck(main.create_app(), "/healthcheck")
+        health = HealthCheck(main.create_app(), "/healthz")
         check = UserModel.sqlite_available()
 
         try:

@@ -94,14 +94,14 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:5000/healthcheck",
+					"raw": "http://localhost:5000/healthz",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "5000",
 					"path": [
-						"healthcheck"
+						"healthz"
 					]
 				}
 			},
