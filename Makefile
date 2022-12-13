@@ -36,6 +36,9 @@ lint:
 unit-test:
 	python3 -m pytest
 
+unit-test-report-sonar:
+	coverage run --source=./api -m pytest && coverage report && coverage xml
+
 # Criar cluster localmente
 kind-create-cluster:
 	kind create cluster --config ./kubernetes/cluster.yaml

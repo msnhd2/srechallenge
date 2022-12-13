@@ -1,5 +1,7 @@
 **/__pycache__/
 **/.pytest_cache
+.coverage
+coverage.xml
 *.db
 *.hcl
 *.terraform*
