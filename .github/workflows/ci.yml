@@ -9,7 +9,7 @@ on:
 
 jobs:
   run-ci:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     name: run-ci
     steps:
       - name: Checkout repository
@@ -18,8 +18,8 @@ jobs:
       - name: Setup python
         uses: actions/setup-python@v3
         with:
-          python-version: '3.8.5'
-          cache: 'pip'
+          python-version: "3.8.5"
+          cache: "pip"
 
       - name: Install Dependencies
         run: make install-dependencies 
