@@ -37,7 +37,7 @@ unit-test:
 	python3 -m pytest
 
 unit-test-report-sonar:
-	coverage run --source=./api -m pytest && coverage report && coverage xml
+	coverage run --source=./api -m pytest
 
 # Criar cluster localmente
 kind-create-cluster:
