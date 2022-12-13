@@ -7,18 +7,33 @@ metadata:
 
 ---
 apiVersion: v1
-kind: LimitRange
+kind: Namespace
 metadata:
-  namespace: srechallenge
-  name: mem-cpu-limit-range
+  name: tools
   labels:
-    name: srechallenge
-spec:
-  limits:
-  - default:
-      memory: 256Mi
-      cpu: 2000m
-    defaultRequest:
-      memory: 128Mi
-      cpu: 1000m
-    type: Container
+    name: monitoring
+    
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: postgresql
+  labels:
+    name: postgresql
+# ---
+# apiVersion: v1
+# kind: LimitRange
+# metadata:
+#   namespace: srechallenge
+#   name: mem-cpu-limit-range
+#   labels:
+#     name: srechallenge
+# spec:
+#   limits:
+#   - default:
+#       memory: 256Mi
+#       cpu: 2000m
+#     defaultRequest:
+#       memory: 128Mi
+#       cpu: 1000m
+#     type: Container

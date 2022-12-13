@@ -80,13 +80,16 @@ deploy-sonarqube:
 
 # Deploy application
 deploy-api:
-	kubectl apply -f ./kubernetes/app/kustomize.yaml
+	kubectl apply -f ./kubernetes/app --recursive
 
 # Port Forwarding to all services
 # Utilizei o & para que os comandos sejam executados em segundo plano
 port-Forwarding:
 	kubectl port-forward -n srechallenge service/srechallenge 5000:5000 & \
 
-# Executar fortio 
+# Executar fortio
+# 800 requisições/segundo
+# Duração de 2 minutos
+# 70 conexçoes simultaneas
 running_fortio:
 	kubectl run -it fortio -n srechallenge --rm --image=fortio/fortio -- load -qps 800 -t 120s -c 70 "http://srechallenge-api-svc:5000/healthz"
