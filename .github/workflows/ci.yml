@@ -1,0 +1,59 @@
+name: Challenge-SonarCloud
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: 
+      - 'feat/*'
+      - 'ci/*'
+
+jobs:
+  run-ci:
+    runs-on: ubuntu-20.04
+    name: run-ci
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.8.5"
+          cache: "pip"
+
+      - name: Install Dependencies
+        run: make install-dependencies 
+
+      - name: Execute Lint
+        run: make lint
+
+      - name: Run unit test
+        run: tox -e py
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v2
+        with:
+          images: msnhd2/flask_docker
+
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+  

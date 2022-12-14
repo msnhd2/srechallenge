@@ -16,7 +16,7 @@ active-env:
 	. ./env/bin/activate
 
 install-dependencies:
-	pip install --upgrade pip && pip3 install -r ./api/requirements.txt
+	sudo pip3 install -r ./api/requirements.txt
 
 run-gunicorn:
 	gunicorn --chdir api main:app -b 0.0.0.0:5000
@@ -35,6 +35,9 @@ lint:
 # Para executar testes unitários
 unit-test:
 	python3 -m pytest
+
+unit-test-report-sonar:
+	coverage run --source=./api -m pytest && coverage report && coverage xml
 
 # Criar cluster localmente
 kind-create-cluster:
