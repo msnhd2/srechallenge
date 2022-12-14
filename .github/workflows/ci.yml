@@ -28,7 +28,7 @@ jobs:
         run: make lint
 
       - name: Run unit test
-        run: tox -e py
+        run: make unit-test-report-sonar
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
@@ -42,11 +42,17 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v2
+      # - name: Extract metadata (tags, labels) for Docker
+      #   id: meta
+      #   uses: docker/metadata-action@v2
+      #   with:
+      #     images: msnhd2/flask_docker
+
+      - name: Get smart tag
+        id: prepare
+        uses: Surgo/docker-smart-tag-action@v1
         with:
-          images: msnhd2/flask_docker
+          docker_image: msnhd2/flask_docker
 
       - name: Build and push
         id: docker_build
@@ -54,6 +60,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.prepare.outputs.tag }}
   
