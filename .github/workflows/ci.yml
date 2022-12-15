@@ -23,13 +23,6 @@ jobs:
           python-version: "3.8.5"
           cache: "pip"
 
-      - name: Docker meta
-        id: docker_meta
-        uses: crazy-max/ghaction-docker-meta@v1
-        with:
-          images: msnhd2/flask_docker
-          tag-sha: true
-
       - name: Install Dependencies
         run: make install-dependencies 
 
@@ -45,6 +38,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
+      - name: Docker meta
+        id: docker_meta
+        uses: crazy-max/ghaction-docker-meta@v1
+        with:
+          images: msnhd2/flask_docker2
+          tag-sha: true
+
       - name: QEMU
         uses: docker/setup-qemu-action@v1
 
@@ -53,7 +53,6 @@ jobs:
 
       - name: Login to DockerHub
         uses: docker/login-action@v1
-        if: ${{ github.ref_type == 'tag' }}
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -64,20 +63,10 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
-      # - name: Docker metadata
-      #   id: metadata
-      #   uses: crazy-max/ghaction-docker-meta@v1
-      #   with:
-      #     images: msnhd2/flask_docker
-      #     tags: |
-      #       type=semver,pattern={{version}}
-      #       type=semver,pattern={{major}}.{{minor}}
-      #       type=raw,value={{sha}},enable=${{ github.ref_type != 'tag' }}
-
       - name: Build and push Docker image 
         uses: docker/build-push-action@v2 
         with: 
           context: .
           push: true
-          tags: msnhd2/flask_docker:${{ steps.tagging.outputs.new_version }}
+          tags: msnhd2/flask_docker2:${{ steps.tagging.outputs.new_version }}
   
