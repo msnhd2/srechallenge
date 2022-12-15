@@ -38,13 +38,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-      - name: Docker meta
-        id: docker_meta
-        uses: crazy-max/ghaction-docker-meta@v1
-        with:
-          images: msnhd2/flask_docker2
-          tag-sha: true
-
       - name: QEMU
         uses: docker/setup-qemu-action@v1
 
@@ -68,5 +61,5 @@ jobs:
         with: 
           context: .
           push: true
-          tags: msnhd2/flask_docker2:${{ steps.tagging.outputs.new_version }}
+          tags: msnhd2/flask_docker:${{ steps.tagging.outputs.new_version }}
   
