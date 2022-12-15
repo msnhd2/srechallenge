@@ -80,5 +80,5 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ steps.tagging.outputs.new_version }}
+          tags: msnhd2/flask_docker:${{ steps.tagging.outputs.new_version }}
   
