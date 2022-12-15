@@ -79,5 +79,6 @@ jobs:
         with: 
           context: .
           file: ./Dockerfile
+          push: true
           tags: ${{ steps.tagging.outputs.new_version }}
   
