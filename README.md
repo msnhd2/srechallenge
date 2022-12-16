@@ -100,21 +100,20 @@ terraform apply -var-file dev.tfvars
 ## Deploy
 
 Caminho a produção: trunk base development
- Temos apenas 1 branch fixa no projeto: Main.
+ Temos apenas 2 branches fixas no projeto: main e development
  O restante das branchs são feature branchs
 
- :arrow_forward: Fluxo: feature_branch -> Main
+ :arrow_forward: Fluxo: feature_branch -> BRANCH developtment(branch onde a release e gerada) -> BRANCH main
+
+ Quando desejar que o codigo novo chegue a produção deve-se efetuar o merge do PR e a pipeline de CD irá:
+ - Deploy da imagem com a tag latest no registry através do ArgoCD
 
  Quando o PR for criado o CI do GithubActions irá:
- - Efetuar o build da imagem docker
+ - Executar o lint
  - Executar testes unitários
- - Rodar scan do SonarQube
+ - Rodar scan do SonarCloud
  - Validar status do QualityGate
- - Realizar o upload da nova imagem docker para o registry
- - Gerar Tag
-
-Quando desejar que o codigo novo chegue a produção deve-se efetuar o merge do PR e a pipeline de CD irá:
- - Deploy da imagem com a tag latest no registry através do ArgoCD
+ - Efetuar o build da imagem docker gerando a tag, e efetuando o push no registry
 
 ## EKS
 
