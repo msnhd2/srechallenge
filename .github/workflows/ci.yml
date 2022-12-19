@@ -53,8 +53,7 @@ jobs:
           tag_prefix: "v"
           major_pattern: "break_change:"
           minor_pattern: "feat:"
-
-          format: "v${major}.${minor}.${patch}-prerelease${increment}"
+          format: "v${major}.${minor}.${patch}"
 
       - name: Login to DockerHub
         uses: docker/login-action@v1
