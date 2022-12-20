@@ -9,17 +9,9 @@ metadata:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: tools
+  name: monitoring
   labels:
     name: monitoring
-    
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: postgresql
-  labels:
-    name: postgresql
 # ---
 # apiVersion: v1
 # kind: LimitRange

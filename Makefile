@@ -1,8 +1,8 @@
 # Comandos sumarizados
 run-api-local: install-pipenv config-pipenv active-env install-dependencies run-gunicorn
 run-api-docker-local: build-image run-container
-run-full-deployments-k8s: kind-create-cluster create-ingress-controller create-namespaces deploy-api deploy-argocd \
-						  deploy-grafana deploy-prometheus deploy-sonarqube create-kub-dashboard
+run-full-deployments-k8s: kind-create-cluster create-metrics-server create-ingress-controller create-namespaces \
+						  deploy-api deploy-argocd deploy-grafana deploy-prometheus create-kub-dashboard
 
 # Para rodar o código localmente execute os seguintes comandos
 
@@ -57,7 +57,7 @@ create-kub-dashboard:
 
 # Criar metrics-server
 create-metrics-server:
-
+	kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/high-availability-1.21+.yaml
 
 # Criar ingress controller nginx
 create-ingress-controller:
@@ -68,20 +68,19 @@ create-namespaces:
 	kubectl apply -f ./kubernetes/namespaces.yaml
 
 # Criar metrics-server
-create-metrics-server:
-	kubectl apply -f ./kubernetes/metrics-server.yaml
+create-metrics-state-server:
+	kubectl apply -f ./kubernetes/metrics --recursive
 
 # Deploy argoCD
 deploy-argocd:
 
 # Deploy grafana
 deploy-grafana:
+kubectl apply -f kubernetes/grafana --recursive
 
 # Deploy prometheus
 deploy-prometheus:
-
-# Deploy SonarQube
-deploy-sonarqube:
+kubectl apply -f kubernetes/prometheus --recursive
 
 # Deploy application
 deploy-api:
@@ -91,6 +90,8 @@ deploy-api:
 # Utilizei o & para que os comandos sejam executados em segundo plano
 port-Forwarding:
 	kubectl port-forward -n srechallenge service/srechallenge 5000:5000 & \
+	kubectl port-forward -n monitoring service/prometheus-service 8000:8080 & \
+	kubectl port-forward -n monitoring service/grafana-service 32000:3000
 
 # Executar fortio
 # 800 requisições/segundo
