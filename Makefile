@@ -16,7 +16,7 @@ active-env:
 	. ./env/bin/activate
 
 install-dependencies:
-	pip3 install -r ./api/requirements.txt
+	sudo pip3 install -r ./api/requirements.txt
 
 run-gunicorn:
 	gunicorn --chdir api main:app -b 0.0.0.0:5000
@@ -76,7 +76,7 @@ deploy-argocd:
 
 # Deploy grafana
 deploy-grafana:
-kubectl apply -f kubernetes/grafana --recursive
+	kubectl apply -f kubernetes/grafana --recursive
 
 # Deploy prometheus
 deploy-prometheus:
