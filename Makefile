@@ -73,7 +73,7 @@ create-metrics-state-server:
 
 # Deploy argoCD
 deploy-argocd:
-
+	
 # Deploy grafana
 deploy-grafana:
 	kubectl apply -f kubernetes/grafana --recursive
