@@ -16,7 +16,7 @@ active-env:
 	. ./env/bin/activate
 
 install-dependencies:
-	sudo pip3 install -r ./api/requirements.txt
+	pip3 install -r ./api/requirements.txt
 
 run-gunicorn:
 	gunicorn --chdir api main:app -b 0.0.0.0:5000
