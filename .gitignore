@@ -2,6 +2,8 @@
 **/.pytest_cache
 .coverage
 coverage.xml
+.tox
+.DS_Store
 *.db
 *.hcl
 *.terraform*
