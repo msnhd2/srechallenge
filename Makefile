@@ -80,7 +80,7 @@ deploy-grafana:
 
 # Deploy prometheus
 deploy-prometheus:
-kubectl apply -f kubernetes/prometheus --recursive
+	kubectl apply -f kubernetes/prometheus --recursive
 
 # Deploy application
 deploy-api:
