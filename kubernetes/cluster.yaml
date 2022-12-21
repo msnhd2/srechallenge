@@ -4,6 +4,9 @@ name: srechallenge
 nodes:
 - role: control-plane
   image: kindest/node:v1.25.3@sha256:f52781bc0d7a19fb6c405c2af83abfeb311f130707a0e219175677e366cc45d1
+  extraMounts:
+    - hostPath: /Users/rodrigoandrade/Documents/Projetos/Personal/srechallenge/api
+      containerPath: /app
   kubeadmConfigPatches:
   # Habilitar o ingress para que o nginx rode
   - |
@@ -23,5 +26,11 @@ nodes:
     protocol: TCP
 - role: worker
   image: kindest/node:v1.25.3@sha256:f52781bc0d7a19fb6c405c2af83abfeb311f130707a0e219175677e366cc45d1
+  extraMounts:
+    - hostPath: /Users/rodrigoandrade/Documents/Projetos/Personal/srechallenge/api
+      containerPath: /app
 - role: worker
   image: kindest/node:v1.25.3@sha256:f52781bc0d7a19fb6c405c2af83abfeb311f130707a0e219175677e366cc45d1
+  extraMounts:
+    - hostPath: /Users/rodrigoandrade/Documents/Projetos/Personal/srechallenge/api
+      containerPath: /app

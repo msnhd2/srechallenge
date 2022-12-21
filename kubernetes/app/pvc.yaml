@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: srechallente-api-pv
+  namespace: srechallenge
+  labels:
+    type: local
+spec:
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: standard
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /app
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: srechallente-api-pvc
+  labels:
+    app: srechallenge-api
+  namespace: srechallenge
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
