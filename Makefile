@@ -90,6 +90,6 @@ port-Forwarding:
 # Executar fortio
 # 800 requisições/segundo
 # Duração de 2 minutos
-# 70 conexçoes simultaneas
+# 70 conexões simultaneas
 running_fortio:
 	kubectl run -it fortio -n srechallenge --rm --image=fortio/fortio -- load -qps 800 -t 120s -c 70 "http://srechallenge-api-svc:5000/healthz"
