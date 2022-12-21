@@ -64,3 +64,14 @@ spec:
             timeoutSeconds: 1
             successThreshold: 1
             initialDelaySeconds: 10
+          volumeMounts:
+          - mountPath: "/app"
+            name: data
+      volumes:
+        - name: data
+          hostPath:
+            path: /app
+            type: Directory
+        # - name: srechallenge-api-volume
+        #   persistentVolumeClaim:
+        #     claimName: srechallenge-api-pvc

@@ -1,7 +1,7 @@
 # Comandos sumarizados
 run-api-local: install-pipenv config-pipenv active-env install-dependencies run-gunicorn
 run-api-docker-local: build-image run-container
-run-full-deployments-k8s: kind-create-cluster create-metrics-server create-ingress-controller create-namespaces \
+run-full-deployments-k8s: kind-create-cluster create-metrics-state-server create-ingress-controller create-namespaces \
 						  deploy-api deploy-argocd deploy-grafana deploy-prometheus create-kub-dashboard
 
 # Para rodar o código localmente execute os seguintes comandos
@@ -38,8 +38,6 @@ unit-test:
 
 unit-test-report-sonar:
 	tox -e py
-# unit-test-report-sonar:
-# 	coverage run --source=./api -m pytest && coverage report && coverage xml
 
 # Criar cluster localmente
 kind-create-cluster:
@@ -54,10 +52,6 @@ create-kub-dashboard:
 	kubectl proxy && \
 	kubectl apply -f ./kubernetes/kub-dash/dashboard_user.yaml -n kubernetes-dashboard && \
 	kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | awk '/^secret-admin-user/{print $1}') | awk '$1=="token:"{print $2}'
-
-# Criar metrics-server
-create-metrics-server:
-	kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/high-availability-1.21+.yaml
 
 # Criar ingress controller nginx
 create-ingress-controller:
@@ -89,7 +83,7 @@ deploy-api:
 # Port Forwarding to all services
 # Utilizei o & para que os comandos sejam executados em segundo plano
 port-Forwarding:
-	kubectl port-forward -n srechallenge service/srechallenge 5000:5000 & \
+	kubectl port-forward -n srechallenge service/srechallenge-api-svc 5000:5000 & \
 	kubectl port-forward -n monitoring service/prometheus-service 8000:8080 & \
 	kubectl port-forward -n monitoring service/grafana-service 32000:3000
 
