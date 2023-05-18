@@ -39,10 +39,10 @@ Foi utilizado o terraform como IaC para provisionamento do ambiente na AWS.
 - python >= 3.8.5
 - docker >= 20.10.7
 - terraform >= 0.15.00
-- kind >= 0.17.0
+- kind >= 0.19.0
 - gunicorn >= 20.1.0
 - kubernetes EKS >= 1.24
-- kubernetes Local >= 1.25.3
+- kubernetes Local >= 1.25.9
 
 ## Como rodar o projeto a API localmente
 
@@ -62,10 +62,10 @@ make run-api-docker-local
 
 ## Como rodar o projeto com Kubernetes local
 
-:arrow_forward: Create cluster, namespaces + Deploy ArgoCD, Grafana, Prometheus, SonarQube, API, FortIO
+:arrow_forward: Create cluster, namespaces, ArgoCD, Grafana, Prometheus, API, FortIO
 
 ```sh
-make run-full-deployments-k8s
+make run-full-deployments-k8s-local
 ```
 
 ## Como testar funcionalidades aplicação manualmente
@@ -106,7 +106,7 @@ Caminho a produção: trunk base development
  :arrow_forward: Fluxo: feature_branch -> BRANCH developtment(branch onde a release e gerada) -> BRANCH main
 
  Quando desejar que o codigo novo chegue a produção deve-se efetuar o merge do PR e a pipeline de CD irá:
- - Deploy da imagem com a tag latest no registry através do ArgoCD
+ - Efetuar o deploy da imagem com a tag latest no registry através do ArgoCD
 
  Quando o PR for criado o CI do GithubActions irá:
  - Executar o lint
@@ -136,16 +136,35 @@ Caminho a produção: trunk base development
 
 ## Como fazer um teste de carga
 
+- Com o(s) pod(s) da aplicação rodando execute o seguinte comando:
+
+```sh
+make running_fortio
+```
+Especificação:
+  - 800 requisições por segundo
+  - Duração de dois minutos
+  - 70 conexões simultaneas
+
+Após isso monitore o consumo de recursos pelo grafana, kubernetes-dashboard ou com o comando:
+
+```sh
+watch -n1 kubectl get hpa -n srechallenge
+```
 
 ## Como acessar as ferramentas?
 
 #### Grafana
 
+http://localhost:32000
+
 #### Prometheus Server
+
+http://localhost:8000
 
 #### Dashboard do kubernetes
 
-Após executar o projeto no kubernetes local, acessar o [link](http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/)
+Após executar o projeto no kubernetes local com o comando (make run-full-deployments-k8s), colete o token que é exibido e acesse o [link](http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/)
 
  ## Desenvolvedor
 

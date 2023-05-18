@@ -23,6 +23,7 @@ spec:
       labels:
         app: "srechallenge-api"
     spec:
+      serviceAccount: srechallenge
       containers:
         - name: srechallenge-api
           image: "msnhd2/flask_docker:v1.2"
@@ -72,6 +73,3 @@ spec:
           hostPath:
             path: /app
             type: Directory
-        # - name: srechallenge-api-volume
-        #   persistentVolumeClaim:
-        #     claimName: srechallenge-api-pvc

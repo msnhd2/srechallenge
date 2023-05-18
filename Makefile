@@ -1,7 +1,7 @@
 # Comandos sumarizados
 run-api-local: install-pipenv config-pipenv active-env install-dependencies run-gunicorn
 run-api-docker-local: build-image run-container
-run-full-deployments-k8s: kind-create-cluster create-metrics-state-server create-ingress-controller create-namespaces \
+run-full-deployments-k8s-local: kind-create-cluster create-metrics-state-server create-ingress-controller create-namespaces \
 						  deploy-api deploy-argocd deploy-grafana deploy-prometheus create-kub-dashboard
 
 # Para rodar o código localmente execute os seguintes comandos
@@ -55,7 +55,7 @@ create-kub-dashboard:
 
 # Criar ingress controller nginx
 create-ingress-controller:
-	kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy
+	kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
 
 # Criar namespace
 create-namespaces:
@@ -76,8 +76,11 @@ deploy-grafana:
 deploy-prometheus:
 	kubectl apply -f kubernetes/prometheus --recursive
 
+# O primeiro comando serve para adicionar uma entrada DNS no arquivo host do MAC OS
 # Deploy application
 deploy-api:
+	sudo -- sh -c -e "echo '127.0.0.1 srechallenge.com' >> /private/etc/hosts"; && \
+	dscacheutil -flushcache && \
 	kubectl apply -f ./kubernetes/app --recursive
 
 # Port Forwarding to all services
@@ -90,6 +93,6 @@ port-Forwarding:
 # Executar fortio
 # 800 requisições/segundo
 # Duração de 2 minutos
-# 70 conexçoes simultaneas
+# 70 conexões simultaneas
 running_fortio:
 	kubectl run -it fortio -n srechallenge --rm --image=fortio/fortio -- load -qps 800 -t 120s -c 70 "http://srechallenge-api-svc:5000/healthz"
