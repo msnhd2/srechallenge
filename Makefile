@@ -76,9 +76,11 @@ deploy-grafana:
 deploy-prometheus:
 	kubectl apply -f kubernetes/prometheus --recursive
 
+# O primeiro comando serve para adicionar uma entrada DNS no arquivo host do MAC OS
 # Deploy application
 deploy-api:
 	sudo -- sh -c -e "echo '127.0.0.1 srechallenge.com' >> /private/etc/hosts"; && \
+	dscacheutil -flushcache && \
 	kubectl apply -f ./kubernetes/app --recursive
 
 # Port Forwarding to all services
