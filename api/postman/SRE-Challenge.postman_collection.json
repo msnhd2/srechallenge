@@ -21,12 +21,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5000/users/12764599714",
+					"raw": "http://srechallenge.com/users/12764599714",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"srechallenge",
+						"com"
 					],
-					"port": "5000",
 					"path": [
 						"users",
 						"12764599714"
@@ -41,13 +41,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5000/users/12764599714",
+					"raw": "http://srechallenge.com//users/12764599714",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"srechallenge",
+						"com"
 					],
-					"port": "5000",
 					"path": [
+						"",
 						"users",
 						"12764599714"
 					]
@@ -68,13 +69,14 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:5000/users",
+					"raw": "http://srechallenge.com//users",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"srechallenge",
+						"com"
 					],
-					"port": "5000",
 					"path": [
+						"",
 						"users"
 					]
 				}
@@ -94,12 +96,12 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:5000/healthz",
+					"raw": "http://srechallenge.com/healthz",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"srechallenge",
+						"com"
 					],
-					"port": "5000",
 					"path": [
 						"healthz"
 					]
@@ -108,17 +110,17 @@
 			"response": []
 		},
 		{
-			"name": "Dele user",
+			"name": "Delete user",
 			"request": {
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5000/users/12764599714",
+					"raw": "http://srechallenge.com/users/12764599714",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"srechallenge",
+						"com"
 					],
-					"port": "5000",
 					"path": [
 						"users",
 						"12764599714"
@@ -142,12 +144,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5000/users/29481625052",
+					"raw": "http://srechallenge.com/users/29481625052",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"srechallenge",
+						"com"
 					],
-					"port": "5000",
 					"path": [
 						"users",
 						"29481625052"

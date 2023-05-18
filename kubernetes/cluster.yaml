@@ -3,7 +3,7 @@ apiVersion: kind.x-k8s.io/v1alpha4
 name: srechallenge
 nodes:
 - role: control-plane
-  image: kindest/node:v1.25.3@sha256:f52781bc0d7a19fb6c405c2af83abfeb311f130707a0e219175677e366cc45d1
+  image: kindest/node:v1.25.9@sha256:c08d6c52820aa42e533b70bce0c2901183326d86dcdcbedecc9343681db45161
   extraMounts:
     - hostPath: /Users/rodrigoandrade/Documents/Projetos/Personal/srechallenge/api
       containerPath: /app
@@ -25,12 +25,12 @@ nodes:
     hostPort: 443
     protocol: TCP
 - role: worker
-  image: kindest/node:v1.25.3@sha256:f52781bc0d7a19fb6c405c2af83abfeb311f130707a0e219175677e366cc45d1
+  image: kindest/node:v1.25.9@sha256:c08d6c52820aa42e533b70bce0c2901183326d86dcdcbedecc9343681db45161
   extraMounts:
     - hostPath: /Users/rodrigoandrade/Documents/Projetos/Personal/srechallenge/api
       containerPath: /app
 - role: worker
-  image: kindest/node:v1.25.3@sha256:f52781bc0d7a19fb6c405c2af83abfeb311f130707a0e219175677e366cc45d1
+  image: kindest/node:v1.25.9@sha256:c08d6c52820aa42e533b70bce0c2901183326d86dcdcbedecc9343681db45161
   extraMounts:
     - hostPath: /Users/rodrigoandrade/Documents/Projetos/Personal/srechallenge/api
       containerPath: /app
