@@ -74,8 +74,76 @@ make run-full-deployments-k8s-local
 
 Importe a configuração do postman localizada em [postman](https://github.com/msnhd2/srechallenge/blob/main/api/postman/SRE-Challenge.postman_collection.json) e utilize a documentação para utilizar a API.
 
+## Começando
+```bash
+git clone git@github.com:Regional-IT-India/catalyst-infra-starter.git
+cd catalyst-infra-starter
+```
+## Pre-Requisitos
 
-## Provisionar serviços com terraform
+#### 1) Instale as ferramentas abaixo para começar com deployments no terraform. Se você estiver usando o Mac OS, execute os comandos abaixo para configurar as ferramentas necessárias.
+
+- Terraform :  brew install terraform 
+- AWS CLI (Optional) : brew install awscli
+- TF Lint (Optional) : brew install tflint
+- TfSwitch(Optional) : brew install warrensbox/tap/tfswitch
+
+#### 2) Para Deployar o código terraform e provisionar a infraestrutura, precisamos de credenciais para conectar com a AWS. Abaixo estão as formas de exportar credenciais.
+
+- Opção-1: Exportando Secret Key and Access Key
+
+ ```bash
+  export AWS_ACCESS_KEY_ID="<< SUA ACCESS KEY >>"
+  export AWS_SECRET_ACCESS_KEY="<< SUA SECRET ACCESS KEY>>"
+ ```
+
+- Opção-2: Use o Profile (Se você acessar AWS através de SSO)
+  pre-requisito: Verifique se a AWS CLI está instalada no laptop
+
+  ```aws 
+   aws configure sso
+   SSO start URL [None]: <<sso-start-url da sua conta aws>>
+   SSO Region [None]: <<region onde o sso está ativado>>
+  ```
+  * Selecione a conta com a qual deseja trabalhar
+  * Forneça um nome de profile
+  * Isso cria uma entrada no arquivo `.aws/config`
+  * Exporte o profile `AWS_PROFILE`
+    ```bash
+      export AWS_PROFILE=((profile_name))
+    ```
+
+#### 3) Exportar a Região como variável de ambiente.
+```bash
+export TF_VAR_region=((REGION_TO_DEPLOY))
+```
+
+#### 4) S3 Bucket para armazenar arquivos de estado
+
+Observação: substitua os espaços reservados "BUCKET_NAME" e "REGION_TO_DEPLOY" pelos valores apropriados.
+
+- Configure o S3 Bucket por meio da CLI
+```bash
+$ aws s3api create-bucket \
+--bucket ((BUCKET_NAME))\
+--region ((REGION_TO_DEPLOY))\
+--create-bucket-configuration LocationConstraint=((REGION_TO_DEPLOY))
+```
+
+- Habilite o versionamento
+```bash
+$ aws s3api put-bucket-versioning --bucket ((BUCKET_NAME)) --versioning-configuration Status=Enabled 
+```
+
+- Permissões para configurar o log
+
+  - Atualize o nome do bucket para apontar para o seu bucket no arquivo "logging_bucket_policy.json" (linha nº: 12) presente na raiz do seu repositório.
+
+```bash
+$ aws s3api put-bucket-policy --bucket ((BUCKET_NAME))--policy file://logging_bucket_policy.json
+```
+
+## Provisionar serviços com terraform pela CLI
 
  Neste projeto foi utilizado o terraform para provisionar o cluster kubernetes e todas as suas dependencias(VPC, IAM, worker nodes).
 
@@ -91,11 +159,18 @@ terraform init
 terraform plan -var-file dev.tfvars
 ```
 
+:arrow_forward: Test terraform
+
+```sh
+#terraform apply -var-file dev.tfvars
+```
+
 :arrow_forward: Apply terraform
 
 ```sh
 terraform apply -var-file dev.tfvars
 ```
+## Provisionar serviços com terraform pela pipeline
 
 ## Deploy
 
