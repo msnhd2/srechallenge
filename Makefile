@@ -2,7 +2,7 @@
 run-api-local: install-pipenv config-pipenv active-env install-dependencies run-gunicorn
 run-api-docker-local: build-image run-container
 run-full-deployments-k8s-local: kind-create-cluster create-metrics-state-server create-ingress-controller create-namespaces \
-						  deploy-api deploy-argocd deploy-grafana deploy-prometheus create-kub-dashboard
+						  deploy-argocd deploy-api deploy-grafana deploy-prometheus create-dns-local create-kub-dashboard
 
 # Para rodar o código localmente execute os seguintes comandos
 
@@ -67,6 +67,7 @@ create-metrics-state-server:
 
 # Deploy argoCD
 deploy-argocd:
+	kubectl apply -f ./kubernetes/argocd --recursive
 
 # Deploy grafana
 deploy-grafana:
@@ -79,9 +80,15 @@ deploy-prometheus:
 # O primeiro comando serve para adicionar uma entrada DNS no arquivo host do MAC OS
 # Deploy application
 deploy-api:
-	sudo -- sh -c -e "echo '127.0.0.1 srechallenge.com' >> /private/etc/hosts"; && \
-	dscacheutil -flushcache && \
 	kubectl apply -f ./kubernetes/app --recursive
+
+#Criação de entradas DNS locamnete no MAC OS para acessar os serviços por meio do ingress
+create-dns-local:
+	sudo -- sh -c -e "echo '127.0.0.1 srechallenge-argocd.com' >> /private/etc/hosts"; && \
+	sudo -- sh -c -e "echo '127.0.0.1 srechallenge-grafana.com' >> /private/etc/hosts"; && \
+	sudo -- sh -c -e "echo '127.0.0.1 srechallenge-prometheus.com' >> /private/etc/hosts"; && \
+	sudo -- sh -c -e "echo '127.0.0.1 srechallenge.com' >> /private/etc/hosts"; && \
+	dscacheutil -flushcache
 
 # Port Forwarding to all services
 # Utilizei o & para que os comandos sejam executados em segundo plano

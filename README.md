@@ -15,12 +15,19 @@ Foi utilizado o terraform como IaC para provisionamento do ambiente na AWS.
 ## Conteúdos
    * [Funcionalidades](#funcionalidades)
    * [Dependências](#dependências)
+   * [Como rodar o projeto a API localmente](#como-rodar-o-projeto-da-api-localmente)
    * [Como rodar o projeto com Docker](#como-rodar-o-projeto-com-docker)
    * [Como rodar o projeto com Kubernetes local](#como-rodar-o-projeto-com-kubernetes-local)
-   * [Provisionar serviços com terraform](#provisionar-serviços-com-terraform)
+   * [Como testar as funcionalidades da aplicação manualmente](#como-testar-as-funcionalidades-da-aplicação-manualmente)
+   * [Começando](#começando)
+   * [Pre-Requisitos](#pre-requisitos)
+   * [Provisionar infraestrutura com terraform pela CLI](#provisionar-infraestrutura-com-terraform-pela-cli)
+   * [Provisionar infraestrutura com terraform pela pipeline](#provisionar-serviços-com-terraform-pela-pipeline)
+   * [Deploy](#deploy)
    * [EKS](#eks)
    * [Como fazer um teste de carga](#como-fazer-um-teste-de-carga)
-   * [Deploy](#deploy)
+   * [Como acessar as ferramentas?](#como-acessar-as-ferramentas)
+
 
 ## Funcionalidades
 
@@ -68,7 +75,7 @@ make run-api-docker-local
 make run-full-deployments-k8s-local
 ```
 
-## Como testar funcionalidades aplicação manualmente
+## Como testar as funcionalidades da aplicação manualmente
 
 :arrow_forward: Postman
 
@@ -76,17 +83,17 @@ Importe a configuração do postman localizada em [postman](https://github.com/m
 
 ## Começando
 ```bash
-git clone git@github.com:Regional-IT-India/catalyst-infra-starter.git
-cd catalyst-infra-starter
+git clone git@github.com:msnhd2/srechallenge.git
+cd srechallenge
 ```
 ## Pre-Requisitos
 
 #### 1) Instale as ferramentas abaixo para começar com deployments no terraform. Se você estiver usando o Mac OS, execute os comandos abaixo para configurar as ferramentas necessárias.
 
 - Terraform :  brew install terraform 
-- AWS CLI (Optional) : brew install awscli
-- TF Lint (Optional) : brew install tflint
-- TfSwitch(Optional) : brew install warrensbox/tap/tfswitch
+- AWS CLI (Opcional) : brew install awscli
+- TF Lint (Opcional) : brew install tflint
+- TfSwitch(Opcional) : brew install warrensbox/tap/tfswitch
 
 #### 2) Para Deployar o código terraform e provisionar a infraestrutura, precisamos de credenciais para conectar com a AWS. Abaixo estão as formas de exportar credenciais.
 
@@ -98,7 +105,7 @@ cd catalyst-infra-starter
  ```
 
 - Opção-2: Use o Profile (Se você acessar AWS através de SSO)
-  pre-requisito: Verifique se a AWS CLI está instalada no laptop
+  pre-requisito: Verifique se a AWS CLI está instalada no computador
 
   ```aws 
    aws configure sso
@@ -143,7 +150,7 @@ $ aws s3api put-bucket-versioning --bucket ((BUCKET_NAME)) --versioning-configur
 $ aws s3api put-bucket-policy --bucket ((BUCKET_NAME))--policy file://logging_bucket_policy.json
 ```
 
-## Provisionar serviços com terraform pela CLI
+## Provisionar infraestrutura com terraform pela CLI
 
  Neste projeto foi utilizado o terraform para provisionar o cluster kubernetes e todas as suas dependencias(VPC, IAM, worker nodes).
 
@@ -170,7 +177,7 @@ terraform plan -var-file dev.tfvars
 ```sh
 terraform apply -var-file dev.tfvars
 ```
-## Provisionar serviços com terraform pela pipeline
+## Provisionar infraestrutura com terraform pela pipeline
 
 ## Deploy
 
