@@ -238,11 +238,11 @@ watch -n1 kubectl get hpa -n srechallenge
 
 #### Grafana
 
-http://localhost:32000
+http://srechallenge-grafana.com
 
 #### Prometheus Server
 
-http://localhost:8000
+http://srechallenge-prometheus.com
 
 #### Dashboard do kubernetes
 
