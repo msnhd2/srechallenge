@@ -1,4 +1,4 @@
-name: Challenge-SonarCloud
+name: Challenge-SRE-CI
 on:
   pull_request:
     branches: [ main ]
@@ -7,6 +7,10 @@ on:
     branches: 
       - 'feat/*'
       - 'ci/*'
+      - 'chore/*'
+      - 'fix/*'
+      - 'docs/*'
+      - 'test/*'
 
 jobs:
   run-ci:

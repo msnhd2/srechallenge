@@ -38,7 +38,7 @@ Foi utilizado o terraform como IaC para provisionamento do ambiente na AWS.
 
 - python >= 3.8.5
 - docker >= 20.10.7
-- terraform >= 0.15.00
+- terraform >= 0.15.0
 - kind >= 0.19.0
 - gunicorn >= 20.1.0
 - kubernetes EKS >= 1.24

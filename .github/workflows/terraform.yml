@@ -1,0 +1,128 @@
+name: Challenge-SRE-terraform
+on:
+  workflow_dispatch:
+    # Inputs the workflow accepts.
+    inputs:
+      action:
+        description: 'Action Terraform'     
+        required: true
+        default: 'apply'
+        type: choice
+        options:
+        - apply
+        - destroy
+      branch:
+        description: 'Branch name'
+        required: true
+        default: 'main'
+
+#  pull_request:
+#    branches: [ main ]
+
+#  push:
+#    branches: 
+#      - 'terraform/*'
+
+jobs:
+  run-terraform-ci:
+    runs-on: ubuntu-20.04
+    name: run-terraform
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v2.5.0
+        continue-on-error: false
+
+      - name: Configure AWS Credentials Action For GitHub Actions
+        uses: aws-actions/configure-aws-credentials@v1
+        continue-on-error: false
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Setup Terraform CLI
+        uses: hashicorp/setup-terraform@v2.0.2
+        continue-on-error: false
+        with:
+          terraform_version: 0.15.0
+
+      - name: Terraform Init
+        continue-on-error: false
+        run: |
+          echo `pwd`
+          echo "action ${{ github.event.inputs.action }}"
+          echo "** Running Terraform Init**"
+          terraform init
+
+      - name: Terraform Validate
+        run: |
+          echo `pwd`
+          echo "action ${{ github.event.inputs.action }}"
+          echo "** Running Terraform Validate**"
+          terraform validate
+
+      - name: Terraform Fmt
+        run: |
+          echo `pwd`
+          echo "action ${{ github.event.inputs.action }}"
+          echo "** Running Terraform Fmt**"
+          terraform fmt
+
+      - name: Terraform Plan
+        continue-on-error: false
+        run: |
+          echo `pwd`
+          echo "action ${{ github.event.inputs.action }}"
+          echo "** Running Terraform Plan**"
+          terraform plan
+
+      - name: Terratest
+        continue-on-error: false
+        run: |
+          echo `pwd`
+          echo "action ${{ github.event.inputs.action }}"
+          echo "** Running Terratest**"
+#          terraform plan
+
+  run-terraform-cd:
+    needs: run-terraform-ci
+    runs-on: ubuntu-20.04
+    name: run-terraform-cd
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v2.5.0
+        continue-on-error: false
+      
+      - name: Configure AWS Credentials Action For GitHub Actions
+        uses: aws-actions/configure-aws-credentials@v1
+        continue-on-error: false
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Setup Terraform CLI
+        uses: hashicorp/setup-terraform@v2.0.2
+        continue-on-error: false
+        with:
+          terraform_version: 0.15.0
+        
+      - name: Terraform Action
+        if: github.ref == 'refs/heads/main'
+        continue-on-error: false
+        run: |
+          echo `pwd`
+          echo "action ${{ github.event.inputs.action }}"
+          echo "** Running Terraform ${{ github.event.inputs.action }} **"
+          terraform ${{ github.event.inputs.action }} -auto-approve
+        working-directory: ${{ github.event.inputs.action }}
+
+      # - name: Terraform Destroy
+      #   if: github.ref == 'refs/heads/main' && "${{ github.event.inputs.action == 'destroy' }}"
+      #   continue-on-error: false
+      #   run: |
+      #     echo "** Running Terraform Destroy**"
+      #     terraform plan -destroy
+      #     terraform destroy -auto-approve
+      #   working-directory: ${{ github.event.inputs.action }}
+    

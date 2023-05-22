@@ -2,7 +2,7 @@ terraform {
   # Se não for definido o escopo da versão do provedor adequadamente, o Terraform baixará a versão mais recente do provedor que atende à restrição de versão.
   # Isso pode levar a alterações inesperadas na infraestrutura. Ao especificar cuidadosamente as versões do provedor e usar o arquivo de bloqueio de dependência,
   # pode-se garantir que o Terraform esteja usando a versão correta do provedor para que a configuração seja aplicada de forma consistente.
-  required_version = ">= 0.14"
+  required_version = "= 0.15"
   backend "s3" {
     encrypt = true
     bucket = "srechallenge"
