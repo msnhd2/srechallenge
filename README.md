@@ -237,17 +237,34 @@ watch -n1 kubectl get hpa -n srechallenge
 ## Como acessar as ferramentas?
 
 #### Grafana
-
-http://srechallenge-grafana.com
+Login e senha default
+URL: http://srechallenge-grafana.com
 
 #### Prometheus Server
 
-http://srechallenge-prometheus.com
+URL: http://srechallenge-prometheus.com
+
+#### ArgoCD
+Login: admin
+Para obter a senha execute o comando a seguir:
+```sh
+make get-password-argocd
+```
+URL: http://srechallenge-argocd.com
 
 #### Dashboard do kubernetes
 
 Após executar o projeto no kubernetes local com o comando (make run-full-deployments-k8s), colete o token que é exibido e acesse o [link](http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/)
 
+#### Melhorias a fazer
+
+- Colocar secrets nas variáveis de ambiente
+- Testar autoscaling dos nodes na aws
+- Configurar ExternalDNS para o route53
+- Testar pipeline terraform
+- Implementar terratest
+- Configuração do application no argocd utilizando applicationset
+- Implementer Jaeger para realizar traces
  ## Desenvolvedor
 
  Rodrigo Andrade Mendonça de Oliveira

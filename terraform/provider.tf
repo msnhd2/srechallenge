@@ -3,13 +3,13 @@ terraform {
   # Isso pode levar a alterações inesperadas na infraestrutura. Ao especificar cuidadosamente as versões do provedor e usar o arquivo de bloqueio de dependência,
   # pode-se garantir que o Terraform esteja usando a versão correta do provedor para que a configuração seja aplicada de forma consistente.
   required_version = "= 0.15"
-  backend "s3" {
-    encrypt = true
-    bucket = "srechallenge"
-    key = "dev/terraform.tfstate"
-    region = var.aws_region
-    #dynamodb_table = ""
-  }
+  # backend "s3" {
+  #   encrypt = true
+  #   bucket = "srechallenge"
+  #   key = "dev/terraform.tfstate"
+  #   region = var.aws_region
+  #   #dynamodb_table = ""
+  # }
   required_providers {
     aws = {
       source  = "hashicorp/aws"

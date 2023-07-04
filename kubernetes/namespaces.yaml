@@ -17,9 +17,9 @@ metadata:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: tools
+  name: argocd
   labels:
-    name: tools
+    name: argocd
 # ---
 # apiVersion: v1
 # kind: LimitRange

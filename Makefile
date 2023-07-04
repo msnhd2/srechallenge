@@ -1,8 +1,18 @@
 # Comandos sumarizados
 run-api-local: install-pipenv config-pipenv active-env install-dependencies run-gunicorn
 run-api-docker-local: build-image run-container
-run-full-deployments-k8s-local: kind-create-cluster create-metrics-state-server create-ingress-controller create-namespaces \
-						  deploy-argocd deploy-api deploy-grafana deploy-prometheus create-dns-local create-kub-dashboard
+run-full-deployments-k8s-local: 
+	make kind-create-cluster 
+	make create-ingress-controller && 
+	make create-metrics-state-server  
+	make create-namespaces
+#	sleep 3m
+	make deploy-argocd 
+	make deploy-api 
+	make deploy-grafana
+	make deploy-prometheus
+	make create-dns-local
+	make create-kub-dashboard
 
 # Para rodar o código localmente execute os seguintes comandos
 
@@ -45,7 +55,7 @@ kind-create-cluster:
 
 # Criar Web UI Dashboard do kubernetes
 # Habilitar acesso ao dashboard
-# Criação da service account e dar o bind
+# Criação da service account e dando bind
 # Get token para autenticar
 create-kub-dashboard:
 	kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.6.1/aio/deploy/recommended.yaml && \
@@ -61,13 +71,18 @@ create-ingress-controller:
 create-namespaces:
 	kubectl apply -f ./kubernetes/namespaces.yaml
 
-# Criar metrics-server
+# Criar metrics-server(informações de recursos dentro do cluster) e kube-state-metrics(Informações dos componentes cluster)
 create-metrics-state-server:
 	kubectl apply -f ./kubernetes/metrics --recursive
 
 # Deploy argoCD
+# Get default password
 deploy-argocd:
+	kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml && \
 	kubectl apply -f ./kubernetes/argocd --recursive
+
+get-password-argocd:
+	kubectl get secrets/argocd-initial-admin-secret  -n argocd --template={{.data.password}} | base64 -D && echo
 
 # Deploy grafana
 deploy-grafana:
@@ -77,25 +92,25 @@ deploy-grafana:
 deploy-prometheus:
 	kubectl apply -f kubernetes/prometheus --recursive
 
-# O primeiro comando serve para adicionar uma entrada DNS no arquivo host do MAC OS
 # Deploy application
 deploy-api:
 	kubectl apply -f ./kubernetes/app --recursive
 
-#Criação de entradas DNS locamnete no MAC OS para acessar os serviços por meio do ingress
+#Criação de entradas DNS localmente no MAC OS para acessar os serviços por meio do ingress
 create-dns-local:
-	sudo -- sh -c -e "echo '127.0.0.1 srechallenge-argocd.com' >> /private/etc/hosts"; && \
-	sudo -- sh -c -e "echo '127.0.0.1 srechallenge-grafana.com' >> /private/etc/hosts"; && \
-	sudo -- sh -c -e "echo '127.0.0.1 srechallenge-prometheus.com' >> /private/etc/hosts"; && \
-	sudo -- sh -c -e "echo '127.0.0.1 srechallenge.com' >> /private/etc/hosts"; && \
+	sudo -- sh -c -e "echo '127.0.0.1 srechallenge-argocd.com' >> /private/etc/hosts";
+	sudo -- sh -c -e "echo '127.0.0.1 srechallenge-grafana.com' >> /private/etc/hosts";
+	sudo -- sh -c -e "echo '127.0.0.1 srechallenge-prometheus.com' >> /private/etc/hosts";
+	sudo -- sh -c -e "echo '127.0.0.1 srechallenge.com' >> /private/etc/hosts";
 	dscacheutil -flushcache
 
-# Port Forwarding to all services
+# Port Forwarding para todos os serviços
 # Utilizei o & para que os comandos sejam executados em segundo plano
 port-Forwarding:
 	kubectl port-forward -n srechallenge service/srechallenge-api-svc 5000:5000 & \
 	kubectl port-forward -n monitoring service/prometheus-service 8000:8080 & \
-	kubectl port-forward -n monitoring service/grafana-service 32000:3000
+	kubectl port-forward -n monitoring service/grafana-service 32000:3000 & \
+	kubectl port-forward -n argocd service/argocd-server 9009:80
 
 # Executar fortio
 # 800 requisições/segundo
