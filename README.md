@@ -21,8 +21,7 @@ Foi utilizado o terraform como IaC para provisionamento do ambiente na AWS.
    * [Como testar as funcionalidades da aplicação manualmente](#como-testar-as-funcionalidades-da-aplicação-manualmente)
    * [Começando](#começando)
    * [Pre-Requisitos](#pre-requisitos)
-   * [Provisionar infraestrutura com terraform pela CLI](#provisionar-infraestrutura-com-terraform-pela-cli)
-   * [Provisionar infraestrutura com terraform pela pipeline](#provisionar-serviços-com-terraform-pela-pipeline)
+   * [Provisionar infraestrutura com terraform](#provisionar-infraestrutura-com-terraform)
    * [Deploy](#deploy)
    * [EKS](#eks)
    * [Como fazer um teste de carga](#como-fazer-um-teste-de-carga)
@@ -42,18 +41,15 @@ Foi utilizado o terraform como IaC para provisionamento do ambiente na AWS.
 :arrow_forward: A aplicação utiliza as variáveis cadastradas no arquivo .env
 
 :arrow_forward: Os requisitos abaixo são necessários para executar a criação e provisionamento do ambiente.
-<details>
-  <summary>Requisitos</summary>
-- python >= 3.8.5
+
 - docker >= 20.10.7
 - terraform >= 0.15.0
 - kind >= 0.19.0
 - gunicorn >= 20.1.0
 - kubernetes EKS >= 1.24
 - kubernetes Local >= 1.25.9
-</details>
 
-## Como rodar o projeto a API localmente
+## Como rodar o projeto da API localmente
 
 :arrow_forward: Create virtualenv + Install dependencies + running 
 
@@ -86,7 +82,7 @@ make run-full-deployments-k8s-local
 
 :arrow_forward: Postman
 
-Importe a configuração do postman localizada em [postman](https://github.com/msnhd2/srechallenge/blob/main/api/postman/SRE-Challenge.postman_collection.json) e utilize a documentação para utilizar a API.
+Importe a configuração do postman localizada em [postman](https://github.com/msnhd2/srechallenge/blob/main/api/postman/SRE-Challenge.postman_collection.json) e utilize a [documentação](https://docs.google.com/document/d/11iMVa0PZWp-1hjGak5RW7J1ey3WyasWJ/edit#) para utilizar a API.
 
 ## Começando
 ```bash
