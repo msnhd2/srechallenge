@@ -59,6 +59,10 @@ Foi utilizado o terraform como IaC para provisionamento do ambiente na AWS.
 make run-api-local
 ```
 
+### Preencher arquivo .env
+
+
+
 ## Como rodar o projeto com Docker
 
 :arrow_forward: Build Image + Running
@@ -264,7 +268,7 @@ Após executar o projeto no kubernetes local com o comando (make run-full-deploy
 - Testar pipeline terraform
 - Implementar terratest
 - Configuração do application no argocd utilizando applicationset
-- Implementer Jaeger para realizar traces
+- Implementer Jaeger + openTelemetry para realizar traces
  ## Desenvolvedor
 
  Rodrigo Andrade Mendonça de Oliveira
