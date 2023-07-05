@@ -286,7 +286,7 @@ Após executar o projeto no kubernetes local com o comando (make run-full-deploy
 - Testar pipeline terraform
 - Implementar terratest
 - Configuração do application no argocd utilizando applicationset
-- Implementer Jaeger + openTelemetry para realizar traces
+- Implementer Jaeger + openTelemetry(Operator) + openTelemetry(Collector em Deployment + sidecar) para realizar traces
 
 </details>
  ## Desenvolvedor
