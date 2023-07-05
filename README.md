@@ -42,7 +42,8 @@ Foi utilizado o terraform como IaC para provisionamento do ambiente na AWS.
 :arrow_forward: A aplicação utiliza as variáveis cadastradas no arquivo .env
 
 :arrow_forward: Os requisitos abaixo são necessários para executar a criação e provisionamento do ambiente.
-
+<details>
+  <summary>Requisitos</summary>
 - python >= 3.8.5
 - docker >= 20.10.7
 - terraform >= 0.15.0
@@ -50,6 +51,7 @@ Foi utilizado o terraform como IaC para provisionamento do ambiente na AWS.
 - gunicorn >= 20.1.0
 - kubernetes EKS >= 1.24
 - kubernetes Local >= 1.25.9
+</details>
 
 ## Como rodar o projeto a API localmente
 
@@ -59,8 +61,9 @@ Foi utilizado o terraform como IaC para provisionamento do ambiente na AWS.
 make run-api-local
 ```
 
-### Preencher arquivo .env
+### Preenchimento do arquivo .env
 
+Ex: 
 
 
 ## Como rodar o projeto com Docker
@@ -99,7 +102,11 @@ cd srechallenge
 - TF Lint (Opcional) : brew install tflint
 - TfSwitch(Opcional) : brew install warrensbox/tap/tfswitch
 
-#### 2) Para Deployar o código terraform e provisionar a infraestrutura, precisamos de credenciais para conectar com a AWS. Abaixo estão as formas de exportar credenciais.
+#### 2) Configuração S3
+<details>
+  <summary>Como fazer</summary>
+
+#### 1) Para Deployar o código terraform e provisionar a infraestrutura, precisamos de credenciais para conectar com a AWS. Abaixo estão as formas de exportar credenciais.
 
 - Opção-1: Exportando Secret Key and Access Key
 
@@ -153,8 +160,12 @@ $ aws s3api put-bucket-versioning --bucket ((BUCKET_NAME)) --versioning-configur
 ```bash
 $ aws s3api put-bucket-policy --bucket ((BUCKET_NAME))--policy file://logging_bucket_policy.json
 ```
+</details>
 
-## Provisionar infraestrutura com terraform pela CLI
+## Provisionar infraestrutura com terraform 
+
+<details>
+  <summary>Pela CLI</summary>
 
  Neste projeto foi utilizado o terraform para provisionar o cluster kubernetes e todas as suas dependencias(VPC, IAM, worker nodes).
 
@@ -181,7 +192,12 @@ terraform plan -var-file dev.tfvars
 ```sh
 terraform apply -var-file dev.tfvars
 ```
-## Provisionar infraestrutura com terraform pela pipeline
+</details>
+
+<details>
+  <summary>Pela pipelline</summary>
+TO DO
+</details>
 
 ## Deploy
 
@@ -189,9 +205,9 @@ Caminho a produção: trunk base development
  Temos apenas 2 branches fixas no projeto: main e development
  O restante das branchs são feature branchs
 
- :arrow_forward: Fluxo: feature_branch -> BRANCH developtment(branch onde a release e gerada) -> BRANCH main
+ :arrow_forward: Fluxo: <b><span style='color: green;'>feature_branch</span></b> -> <b><span style='color: green;'>BRANCH development(branch onde a release candidate é gerada)</span></b> -> <b><span style='color: green;'>BRANCH main</span></b>
 
- Quando desejar que o codigo novo chegue a produção deve-se efetuar o merge do PR e a pipeline de CD irá:
+ Quando desejar que o codigo novo chegue a produção deve-se efetuar o merge do PR  para BRANCH maine a pipeline de CD irá:
  - Efetuar o deploy da imagem com a tag latest no registry através do ArgoCD
 
  Quando o PR for criado o CI do GithubActions irá:
@@ -260,15 +276,19 @@ URL: http://srechallenge-argocd.com
 
 Após executar o projeto no kubernetes local com o comando (make run-full-deployments-k8s), colete o token que é exibido e acesse o [link](http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/)
 
-#### Melhorias a fazer
+<details>
+  <summary>Melhorias a fazer</summary>
 
 - Colocar secrets nas variáveis de ambiente
 - Testar autoscaling dos nodes na aws
 - Configurar ExternalDNS para o route53
+- Implementar CD na pipeline
 - Testar pipeline terraform
 - Implementar terratest
 - Configuração do application no argocd utilizando applicationset
 - Implementer Jaeger + openTelemetry para realizar traces
+
+</details>
  ## Desenvolvedor
 
  Rodrigo Andrade Mendonça de Oliveira

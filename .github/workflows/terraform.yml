@@ -16,8 +16,9 @@ on:
         required: true
         default: 'main'
 
-#  pull_request:
-#    branches: [ main ]
+  # pull_request:
+  #   paths: 
+  #     - 'terraform/**'
 
 #  push:
 #    branches: 
