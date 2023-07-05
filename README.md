@@ -21,8 +21,7 @@ Foi utilizado o terraform como IaC para provisionamento do ambiente na AWS.
    * [Como testar as funcionalidades da aplicação manualmente](#como-testar-as-funcionalidades-da-aplicação-manualmente)
    * [Começando](#começando)
    * [Pre-Requisitos](#pre-requisitos)
-   * [Provisionar infraestrutura com terraform pela CLI](#provisionar-infraestrutura-com-terraform-pela-cli)
-   * [Provisionar infraestrutura com terraform pela pipeline](#provisionar-serviços-com-terraform-pela-pipeline)
+   * [Provisionar infraestrutura com terraform](#provisionar-infraestrutura-com-terraform)
    * [Deploy](#deploy)
    * [EKS](#eks)
    * [Como fazer um teste de carga](#como-fazer-um-teste-de-carga)
@@ -42,16 +41,13 @@ Foi utilizado o terraform como IaC para provisionamento do ambiente na AWS.
 :arrow_forward: A aplicação utiliza as variáveis cadastradas no arquivo .env
 
 :arrow_forward: Os requisitos abaixo são necessários para executar a criação e provisionamento do ambiente.
-<details>
-  <summary>Requisitos</summary>
-- python >= 3.8.5
+
 - docker >= 20.10.7
 - terraform >= 0.15.0
 - kind >= 0.19.0
 - gunicorn >= 20.1.0
 - kubernetes EKS >= 1.24
 - kubernetes Local >= 1.25.9
-</details>
 
 ## Como rodar o projeto a API localmente
 
