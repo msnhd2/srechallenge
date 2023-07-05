@@ -49,7 +49,7 @@ Foi utilizado o terraform como IaC para provisionamento do ambiente na AWS.
 - kubernetes EKS >= 1.24
 - kubernetes Local >= 1.25.9
 
-## Como rodar o projeto a API localmente
+## Como rodar o projeto da API localmente
 
 :arrow_forward: Create virtualenv + Install dependencies + running 
 
