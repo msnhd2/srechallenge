@@ -282,9 +282,15 @@ Após executar o projeto no kubernetes local com o comando (make run-full-deploy
 - Testar pipeline terraform
 - Implementar terratest
 - Configuração do application no argocd utilizando applicationset
-- Implementer Jaeger + openTelemetry(Operator) + openTelemetry(Collector em Deployment + sidecar) para realizar traces
+- Implementer Jaeger + openTelemetry(Operator) + openTelemetry(Collector em Deployment + sidecar) para realizar traces(Integrando com Grafana)
+  - instalar cert-manager (kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.11.0/cert-manager.yaml)
+  - kubectl apply -f https://github.com/open-telemetry/opentelemetry-operator/releases/latest/download/opentelemetry-operator.yaml
+  - criar instrumentação python
+  - Adicionar annotation no deployment: instrumentation.opentelemetry.io/inject-python: "true"
+  - https://github.com/open-telemetry/opentelemetry-operator/blob/main/README.md#opentelemetry-auto-instrumentation-injection
+
 
 </details>
- ## Desenvolvedor
+ ## Desenvolvedor 
 
  Rodrigo Andrade Mendonça de Oliveira

@@ -17836,6 +17836,13 @@ spec:
           name: plugins-home
         - mountPath: /tmp
           name: tmp
+        resources:
+           limits:
+             memory: 400Mi
+             cpu: "0.2"
+           requests: 
+             memory: 200Mi
+             cpu: "0.2"
       serviceAccountName: argocd-server
       volumes:
       - emptyDir: {}

@@ -78,11 +78,11 @@ create-metrics-state-server:
 # Deploy argoCD
 # Get default password
 deploy-argocd:
-	kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml && \
-	kubectl apply -f ./kubernetes/argocd --recursive
+	kubectl apply -f ./kubernetes/argocd --recursive -n argocd
+# kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml && \
 
 get-password-argocd:
-	kubectl get secrets/argocd-initial-admin-secret  -n argocd --template={{.data.password}} | base64 -D && echo
+	kubectl get secrets/argocd-initial-admin-secret -n argocd --template={{.data.password}} | base64 -D && echo
 
 # Deploy grafana
 deploy-grafana:
