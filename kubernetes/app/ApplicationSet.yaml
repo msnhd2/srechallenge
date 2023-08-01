@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: srechallenge
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - namespace: srechallenge
+  template:
+    metadata:
+      name: '{{namespace}}-api'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/msnhd2/srechallenge.git
+        targetRevision: HEAD
+        path: kubernetes/app
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: srechallenge

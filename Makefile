@@ -3,10 +3,10 @@ run-api-local: install-pipenv config-pipenv active-env install-dependencies run-
 run-api-docker-local: build-image run-container
 run-full-deployments-k8s-local: 
 	make kind-create-cluster 
-	make create-ingress-controller && 
+	make create-ingress-controller
 	make create-metrics-state-server  
 	make create-namespaces
-#	sleep 3m
+	sleep 240
 	make deploy-argocd 
 	make deploy-api 
 	make deploy-grafana
@@ -15,7 +15,6 @@ run-full-deployments-k8s-local:
 	make create-kub-dashboard
 
 # Para rodar o código localmente execute os seguintes comandos
-
 install-pipenv:
 	pip3 install virtualenv==20.16.6
 
@@ -95,6 +94,24 @@ deploy-prometheus:
 # Deploy application
 deploy-api:
 	kubectl apply -f ./kubernetes/app --recursive
+
+# Deploy Cert Manager
+deploy-cert-manager:
+	kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.8.0/cert-manager.yaml 
+
+# Deploy OpenTelemetry Operator
+deploy-oltp-operator:
+	helm install --namespace opentelemetry-operator-system my-opentelemetry-operator open-telemetry/opentelemetry-operator
+
+# Deploy Instrumentation and Collector OTEL
+instrumentation-python:
+	kubectl apply -f kubernetes/python-instrumentation.yaml
+
+# Deploy Jaeger 
+deploy-jaeger:
+	helm repo add jaegertracing https://jaegertracing.github.io/helm-charts
+	helm install jaeger jaegertracing/jaeger
+	helm install jaeger .helm-charts/charts/jaeger -n jaeger
 
 #Criação de entradas DNS localmente no MAC OS para acessar os serviços por meio do ingress
 create-dns-local:

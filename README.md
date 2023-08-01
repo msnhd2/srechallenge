@@ -42,6 +42,7 @@ Foi utilizado o terraform como IaC para provisionamento do ambiente na AWS.
 
 :arrow_forward: Os requisitos abaixo são necessários para executar a criação e provisionamento do ambiente.
 
+- python = 3.8.5
 - docker >= 20.10.7
 - terraform >= 0.15.0
 - kind >= 0.19.0
@@ -275,20 +276,12 @@ Após executar o projeto no kubernetes local com o comando (make run-full-deploy
 <details>
   <summary>Melhorias a fazer</summary>
 
-- Colocar secrets nas variáveis de ambiente
+- Testar pipeline terraform
 - Testar autoscaling dos nodes na aws
 - Configurar ExternalDNS para o route53
 - Implementar CD na pipeline
-- Testar pipeline terraform
 - Implementar terratest
-- Configuração do application no argocd utilizando applicationset
-- Implementer Jaeger + openTelemetry(Operator) + openTelemetry(Collector em Deployment + sidecar) para realizar traces(Integrando com Grafana)
-  - instalar cert-manager (kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.11.0/cert-manager.yaml)
-  - kubectl apply -f https://github.com/open-telemetry/opentelemetry-operator/releases/latest/download/opentelemetry-operator.yaml
-  - criar instrumentação python
-  - Adicionar annotation no deployment: instrumentation.opentelemetry.io/inject-python: "true"
-  - https://github.com/open-telemetry/opentelemetry-operator/blob/main/README.md#opentelemetry-auto-instrumentation-injection
-
+- Implementar auto instrumentation open telemetry operator
 
 </details>
  ## Desenvolvedor 

@@ -20,6 +20,13 @@ metadata:
   name: argocd
   labels:
     name: argocd
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: opentelemetry-operator-system
+  labels:
+    name: opentelemetry-operator-system
 # ---
 # apiVersion: v1
 # kind: LimitRange
